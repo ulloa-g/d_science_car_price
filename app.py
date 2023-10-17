@@ -49,5 +49,10 @@ df["city-L/100km"] = 235 / df["city-mpg"]  # --> we create a new column with the
 df["highway-mpg"] = 235 / df["highway-mpg"]  # --> we modified the existing column
 df.rename(columns={"highway-mpg":"highway-L/100km"}, inplace=True)  # --> then we change the name
 
+# normalization
+df["length"] = df["length"] / df["length"].max()
+df["width"] = df["width"] / df["width"].max()
+df["height"] = df["height"] / df["height"].max()
+
 # index=False mean the row names will not be written
 df.to_csv(PATH, index=False)
