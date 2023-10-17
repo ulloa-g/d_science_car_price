@@ -60,5 +60,15 @@ bins = np.linspace(min(df["horsepower"]), max(df["horsepower"]), 4)
 group_name = ["Low", "Medium", "High"]
 df["horsepower-binned"] = pd.cut(df["horsepower"], bins, labels=group_name, include_lowest=True)
 
+# dummy variable
+dummy_v1 = pd.get_dummies(df["fuel-type"])
+dummy_v1.rename(columns={'gas':'fuel-type-gas', 'diesel':'fuel-type-diesel'}, inplace=True)
+df = pd.concat([df, dummy_v1], axis=1)  # merge dataframe df and dummy_v1
+df.drop("fuel-type", axis=1, inplace=True)
+dummy_v2 = pd.get_dummies(df['aspiration'])
+dummy_v2.rename(columns={'std':'aspiration-std', 'turbo': 'aspiration-turbo'}, inplace=True)
+df = pd.concat([df, dummy_v2], axis=1)
+df.drop('aspiration', axis = 1, inplace=True)
+
 # index=False mean the row names will not be written
 df.to_csv(PATH, index=False)
