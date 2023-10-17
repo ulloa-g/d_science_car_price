@@ -43,5 +43,11 @@ df[["bore", "stroke"]] = df[["bore", "stroke"]].astype("float")
 df[["normalized-losses"]] = df[["normalized-losses"]].astype("int")
 df[["price"]] = df[["price"]].astype("float")
 df[["peak-rpm"]] = df[["peak-rpm"]].astype("float")
+
+# standarization
+df["city-L/100km"] = 235 / df["city-mpg"]  # --> we create a new column with the results
+df["highway-mpg"] = 235 / df["highway-mpg"]  # --> we modified the existing column
+df.rename(columns={"highway-mpg":"highway-L/100km"}, inplace=True)  # --> then we change the name
+
 # index=False mean the row names will not be written
 df.to_csv(PATH, index=False)
