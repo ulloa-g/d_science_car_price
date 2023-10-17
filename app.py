@@ -54,5 +54,11 @@ df["length"] = df["length"] / df["length"].max()
 df["width"] = df["width"] / df["width"].max()
 df["height"] = df["height"] / df["height"].max()
 
+# binning --> horsepower from 59 unique values to 3 groups
+df["horsepower"] = df["horsepower"].astype(int)
+bins = np.linspace(min(df["horsepower"]), max(df["horsepower"]), 4)
+group_name = ["Low", "Medium", "High"]
+df["horsepower-binned"] = pd.cut(df["horsepower"], bins, labels=group_name, include_lowest=True)
+
 # index=False mean the row names will not be written
 df.to_csv(PATH, index=False)
